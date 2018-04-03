@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+### Changed
+- Smart Segments - Prevent includes from queryBuilder to overwrite include from segment scope.
 
 ## RELEASE 2.7.0 - 2018-03-30
 ### Added
