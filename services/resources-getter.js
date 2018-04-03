@@ -83,16 +83,18 @@ function ResourcesGetter(model, opts, params) {
   }
 
   function getAndCountRecords() {
+    var scoped = segmentScope ? model.scope(segmentScope) : model.unscoped();
     var where = getWhere();
+    var include = queryBuilder.getIncludes(scoped, fieldNamesRequested);
 
     var countOpts = {
-      include: queryBuilder.getIncludes(model, fieldNamesRequested),
-      where: where
+      where: where,
+      include: include
     };
 
     var findAllOpts = {
       where: where,
-      include: queryBuilder.getIncludes(model, fieldNamesRequested),
+      include: include,
       order: queryBuilder.getOrder(),
       offset: queryBuilder.getSkip(),
       limit: queryBuilder.getLimit()
@@ -112,17 +114,10 @@ function ResourcesGetter(model, opts, params) {
       });
     }
 
-    if (segmentScope) {
-      return P.all([
-        model.scope(segmentScope).count(countOpts),
-        model.scope(segmentScope).findAll(findAllOpts)
-      ]);
-    } else {
-      return P.all([
-        model.unscoped().count(countOpts),
-        model.unscoped().findAll(findAllOpts)
-      ]);
-    }
+    return P.all([
+      scoped.count(countOpts),
+      scoped.findAll(findAllOpts)
+    ]);
   }
 
   function getSegment() {
