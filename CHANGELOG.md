@@ -1,8 +1,13 @@
 # Change Log
 
 ## [Unreleased]
+<<<<<<< HEAD
 ### Fixed
 - Creation - Prevent associations defined while creating a new record from overwriting associations created by hooks [regression introduced in 2.1.1].
+=======
+### Changed
+- Smart Segments - Prevent includes from queryBuilder to overwrite include from segment scope.
+>>>>>>> protect_scope
 
 ## RELEASE 2.7.0 - 2018-03-30
 ### Added
